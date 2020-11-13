@@ -86,33 +86,30 @@ class KrisVerifyIpJsonController implements ContainerInjectableInterface
             $ipAddress = $validateIp;
         }
         if ($validateDbwebb) {
-            $verification = "ip4";
             $ipAddress = "194.47.150.9";
-            $host = gethostbyaddr($ipAddress);
+            $validateIp = $ipAddress;
+            $host = gethostbyaddr($validateIp);
         }
         if ($validateGoogle) {
-            $verification = "ip6";
             $ipAddress = "2001:4860:4860::8888";
-            $host = gethostbyaddr($ipAddress);
+            $validateIp = $ipAddress;
+            $host = gethostbyaddr($validateIp);
         }
         if ($validateNone) {
             $ipAddress = "91323719.1273123.621316";
-            $verification = "IP not verified.";
             $host = "Host not verified";
         }
-
         try {
-            // $ip = $_POST["validateIp"] ?? null;
             $verify4 = filter_var($validateIp, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4);
             $verify6 = filter_var($validateIp, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
             if ($verify4) {
-                $verification = "ip4";
+                $verification = "IPv4";
                 $host = gethostbyaddr($ipAddress);
             } else if ($verify6) {
-                $verification = "ip6";
+                $verification = "IPv6";
                 $host = gethostbyaddr($ipAddress);
             } else {
-                $verification = "IP not verified.";
+                $verification = "Is not verified.";
                 $host = "Host not verified";
             }
         } catch (\Exception $e) {
@@ -121,7 +118,6 @@ class KrisVerifyIpJsonController implements ContainerInjectableInterface
             $ipAddress = "";
             $host = "IP-address missing.";
         }
-        // var_dump($body[0]);
 
         $json = [
             "message" => __METHOD__. ", POST request was successful",

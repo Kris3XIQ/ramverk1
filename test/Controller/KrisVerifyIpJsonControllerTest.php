@@ -32,6 +32,10 @@ class KrisVerifyIpJsonControllerTest extends TestCase
         // Controller setup
         $this->controller = new KrisVerifyIpJsonController();
         $this->controller->setDI($this->di);
+        $_POST["validateIp"] = null;
+        $_POST["validateDbwebb"] = null;
+        $_POST["validateGoogle"] = null;
+        $_POST["validateNone"] = null;
     }
 
     /**
@@ -49,18 +53,6 @@ class KrisVerifyIpJsonControllerTest extends TestCase
      */
     public function testJsonResult()
     {
-        $res = $this->controller->indexActionPost();
-        $this->assertIsArray($res);
-    }
-
-    /**
-     * Make sure we get the right result from trying to
-     * verify a non-ip address.
-     */
-    public function testInvalidInput()
-    {
-        $this->di->get("request");
-        $_POST["validateIp"] = "123232322";
         $res = $this->controller->indexActionPost();
         $this->assertIsArray($res);
     }
@@ -120,6 +112,17 @@ class KrisVerifyIpJsonControllerTest extends TestCase
     {
         $this->di->get("request");
         $_POST["validateNone"] = true;
+        $res = $this->controller->indexActionPost();
+        $this->assertIsArray($res);
+    }
+
+    /**
+     * Make sure we get the right result from not entering an ip.
+     */
+    public function testJsonCatchException()
+    {
+        $this->di->get("request");
+        $_POST["validateIp"] = "ddd";
         $res = $this->controller->indexActionPost();
         $this->assertIsArray($res);
     }

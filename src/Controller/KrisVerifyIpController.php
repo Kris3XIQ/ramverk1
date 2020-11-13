@@ -103,9 +103,11 @@ class KrisVerifyIpController implements ContainerInjectableInterface
             $ipAddress = "194.47.150.9";
         }
         if ($validateGoogle) {
+            $verification = "IPv4";
             $ipAddress = "2001:4860:4860::8888";
         }
         if ($validateNone) {
+            $verification = "IPv6";
             $ipAddress = "91323719.1273123.621316";
         }
         try {
@@ -113,9 +115,9 @@ class KrisVerifyIpController implements ContainerInjectableInterface
             $verify4 = filter_var($ipAddress, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4);
             $verify6 = filter_var($ipAddress, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
             if ($verify4) {
-                $verification = "ip4";
+                $verification = "IPv4";
             } else if ($verify6) {
-                $verification = "ip6";
+                $verification = "IPv6";
             } else {
                 $verification = "IP not verified.";
             }
