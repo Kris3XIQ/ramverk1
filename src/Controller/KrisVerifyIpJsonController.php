@@ -88,14 +88,17 @@ class KrisVerifyIpJsonController implements ContainerInjectableInterface
         if ($validateDbwebb) {
             $verification = "ip4";
             $ipAddress = "194.47.150.9";
+            $host = gethostbyaddr($ipAddress);
         }
         if ($validateGoogle) {
             $verification = "ip6";
             $ipAddress = "2001:4860:4860::8888";
+            $host = gethostbyaddr($ipAddress);
         }
         if ($validateNone) {
             $ipAddress = "91323719.1273123.621316";
-            $verification = false;
+            $verification = "IP not verified.";
+            $host = "Host not verified";
         }
 
         try {
@@ -104,13 +107,14 @@ class KrisVerifyIpJsonController implements ContainerInjectableInterface
             $verify6 = filter_var($validateIp, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
             if ($verify4) {
                 $verification = "ip4";
+                $host = gethostbyaddr($ipAddress);
             } else if ($verify6) {
                 $verification = "ip6";
-            }
-            if ($validateNone) {
+                $host = gethostbyaddr($ipAddress);
+            } else {
                 $verification = "IP not verified.";
+                $host = "Host not verified";
             }
-            $host = gethostbyaddr($ipAddress);
         } catch (\Exception $e) {
             $body = "Body is missing, make sure to type in IP in body.";
             $verification = false;

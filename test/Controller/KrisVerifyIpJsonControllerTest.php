@@ -54,6 +54,18 @@ class KrisVerifyIpJsonControllerTest extends TestCase
     }
 
     /**
+     * Make sure we get the right result from trying to
+     * verify a non-ip address.
+     */
+    public function testInvalidInput()
+    {
+        $this->di->get("request");
+        $_POST["validateIp"] = "123232322";
+        $res = $this->controller->indexActionPost();
+        $this->assertIsArray($res);
+    }
+
+    /**
      * Make sure we get the right result from verifying an
      * ip4 ip-address.
      */
