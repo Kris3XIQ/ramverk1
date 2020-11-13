@@ -86,7 +86,7 @@ class KrisVerifyIpController implements ContainerInjectableInterface
      *
      * @SuppressWarnings(PHPMD.UnusedLocalVariable)
      *
-     * @return array
+     * @return object
      */
     public function indexActionPost() : object
     {

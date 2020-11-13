@@ -65,7 +65,6 @@ class KrisVerifyIpJsonController implements ContainerInjectableInterface
         return $page->render([
             "title" => $title,
         ]);
-        // return __METHOD__ . ", \$db is {$this->db}";
     }
 
     /**
@@ -98,13 +97,14 @@ class KrisVerifyIpJsonController implements ContainerInjectableInterface
 
         try {
             // $ip = $_POST["validateIp"] ?? null;
-            $verify4 = filter_var($ipAddress, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4);
-            $verify6 = filter_var($ipAddress, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
+            $verify4 = filter_var($validateIp, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4);
+            $verify6 = filter_var($validateIp, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
             if ($verify4) {
                 $verification = "ip4";
             } else if ($verify6) {
                 $verification = "ip6";
-            } else {
+            }
+            if ($validateNone) {
                 $verification = "IP not verified.";
             }
             $host = gethostbyaddr($ipAddress);

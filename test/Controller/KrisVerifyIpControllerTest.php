@@ -23,7 +23,7 @@ class KrisVerifyIpControllerTest extends TestCase
 
         // Setup di
         $this->di = new DIFactoryConfig();
-        $di = $this->di;
+        $this->di = $di;
         $di->loadServices(ANAX_INSTALL_PATH . "/config/di");
 
         // Use a different cache dir for unit test
@@ -32,7 +32,6 @@ class KrisVerifyIpControllerTest extends TestCase
         // Controller setup
         $this->controller = new KrisVerifyIpController();
         $this->controller->setDI($this->di);
-        $this->di->set("request", "\Anax\Request\Request");
     }
 
     /**
@@ -50,36 +49,67 @@ class KrisVerifyIpControllerTest extends TestCase
      */
     public function testRedirectPost()
     {
-        $controller = new KrisVerifyIpController();
-        $controller->setDI($this->di);
-
-        $res = $controller->indexActionPost();
+        $res = $this->controller->indexActionPost();
         $this->assertInstanceOf("Anax\Response\Response", $res);
         $this->assertInstanceOf("Anax\Response\ResponseUtility", $res);
     }
 
     /**
-     * Test route for posting an IP address.
+     * Make sure we get the right result from verifying an
+     * ip4 ip-address.
      */
-    public function testPostActionWithIpAdress()
+    public function testIp4Post()
     {
-        $request = $this->di->get("request");
-        $request->setPost("validateIp", "194.47.150.9");
-
+        $this->di->get("request");
+        $_POST["validateIp"] = "192.0.0.0";
         $res = $this->controller->indexActionPost();
-
         $this->assertInstanceOf("Anax\Response\ResponseUtility", $res);
     }
 
     /**
-     * Test route for clicking on Google link.
+     * Make sure we get the right result from verifying an
+     * ip6 ip-address.
      */
-    public function testPostActionClickGoogle()
+    public function testIp6Post()
     {
-        $request = $this->di->get("request");
-        $request->setPost("validateGoogle", true);
+        $this->di->get("request");
+        $_POST["validateIp"] = "2001:0db8:85a3:0000:0000:8a2e:0370:7334";
         $res = $this->controller->indexActionPost();
+        $this->assertInstanceOf("Anax\Response\ResponseUtility", $res);
+    }
 
+    /**
+     * Make sure that validate dbwebb button-click gives the
+     * right result.
+     */
+    public function testValidateDbwebbPost()
+    {
+        $this->di->get("request");
+        $_POST["validateDbwebb"] = true;
+        $res = $this->controller->indexActionPost();
+        $this->assertInstanceOf("Anax\Response\ResponseUtility", $res);
+    }
+
+    /**
+     * Make sure that validate google button-click gives the
+     * right result.
+     */
+    public function testValidateGooglePost()
+    {
+        $this->di->get("request");
+        $_POST["validateGoogle"] = true;
+        $res = $this->controller->indexActionPost();
+        $this->assertInstanceOf("Anax\Response\ResponseUtility", $res);
+    }
+
+    /**
+     * Make sure we get the right result from not entering an ip.
+     */
+    public function testValidateNone()
+    {
+        $this->di->get("request");
+        $_POST["validateNone"] = true;
+        $res = $this->controller->indexActionPost();
         $this->assertInstanceOf("Anax\Response\ResponseUtility", $res);
     }
 
@@ -88,10 +118,8 @@ class KrisVerifyIpControllerTest extends TestCase
      */
     public function testCatchAll()
     {
-        $controller = new KrisVerifyIpController();
-        $controller->setDI($this->di);
-        $controller->initialize();
-        $res = $controller->catchAll();
+        $this->controller->initialize();
+        $res = $this->controller->catchAll();
         $this->assertInstanceOf("Anax\Response\ResponseUtility", $res);
     }
 }

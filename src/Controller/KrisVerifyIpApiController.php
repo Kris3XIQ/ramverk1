@@ -26,7 +26,6 @@ class KrisVerifyIpApiController implements ContainerInjectableInterface
     public function indexActionPost() : array
     {
         // Handle the action and return a response, try/catch incase body is missing.
-
         try {
             $body = $this->di->get("request")->getBodyAsJson();
             if (is_array($body)) {
@@ -34,6 +33,7 @@ class KrisVerifyIpApiController implements ContainerInjectableInterface
                     $ipAddress = $body["ip"];
                 } else {
                     $key = array_key_first($body);
+                    $host = "Not a valid key";
                     $ipAddress = "";
                 }
             } else {
