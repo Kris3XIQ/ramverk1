@@ -86,13 +86,16 @@ class KrisVerifyIpJsonController implements ContainerInjectableInterface
             $ipAddress = $validateIp;
         }
         if ($validateDbwebb) {
+            $verification = "ip4";
             $ipAddress = "194.47.150.9";
         }
         if ($validateGoogle) {
+            $verification = "ip6";
             $ipAddress = "2001:4860:4860::8888";
         }
         if ($validateNone) {
             $ipAddress = "91323719.1273123.621316";
+            $verification = false;
         }
 
         try {
