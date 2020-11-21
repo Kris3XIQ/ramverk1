@@ -3,7 +3,11 @@
 namespace Anax\View;
 
 /**
+<<<<<<< HEAD
  * Render the ip POST form
+=======
+ * Render ip POST form
+>>>>>>> 0871743517a1c955f9a88d9a17403c16409dfaeb
  */
 ?>
 <h1>Validator for ip-addresses</h1>

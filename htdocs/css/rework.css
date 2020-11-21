@@ -8831,8 +8831,12 @@ body {
   color: #fff;
 }
 
+<<<<<<< HEAD
 li,
 ul {
+=======
+li, ul {
+>>>>>>> 0871743517a1c955f9a88d9a17403c16409dfaeb
   background-color: #2c2c2c;
 }
 
@@ -8844,6 +8848,7 @@ ul {
 .wrap-sidebar .block h4 {
   background-image: none;
 }
+<<<<<<< HEAD
 
 .geo-post-wrapper h1 {
   text-align: center;
@@ -8893,4 +8898,6 @@ ul {
   width: 50%;
   margin: 5px;
 }
+=======
+>>>>>>> 0871743517a1c955f9a88d9a17403c16409dfaeb
 /*# sourceMappingURL=rework.css.map */
