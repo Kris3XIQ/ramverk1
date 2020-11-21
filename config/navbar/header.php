@@ -58,7 +58,6 @@ return [
             ],
         ],
         [
-<<<<<<< HEAD
             "text" => "IP-geo-locator",
             "url" => "ip-geo-locator",
             "title" => "IP with geolocation",
@@ -78,8 +77,6 @@ return [
             ],
         ],
         [
-=======
->>>>>>> 0871743517a1c955f9a88d9a17403c16409dfaeb
             "text" => "Styleväljare",
             "url" => "style",
             "title" => "Välj stylesheet.",
