@@ -26,7 +26,7 @@ class ErrorHandlerController implements ContainerInjectableInterface
      *
      * @return object as the response.
      *
-     * @SuppressWarnings(PHPMD.UnusedLocalVariable)
+     * @SuppressWarnings(PHPMD)
      */
     public function catchAll(...$args) : object
     {

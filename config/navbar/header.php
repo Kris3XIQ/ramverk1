@@ -58,6 +58,25 @@ return [
             ],
         ],
         [
+            "text" => "IP-geo-locator",
+            "url" => "ip-geo-locator",
+            "title" => "IP with geolocation",
+            "submenu" => [
+                "items" => [
+                    [
+                        "text" => "Kris IP-Geolocator",
+                        "url" => "ip-geo-locator",
+                        "title" => "IP-Geolocator.",
+                    ],
+                    [
+                        "text" => "Kris IP-Geolocator API(JSON)",
+                        "url" => "ip-geo-locator-api",
+                        "title" => "IP-Geolocator API(JSON).",
+                    ],
+                ],
+            ],
+        ],
+        [
             "text" => "Styleväljare",
             "url" => "style",
             "title" => "Välj stylesheet.",
