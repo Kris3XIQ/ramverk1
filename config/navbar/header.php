@@ -77,6 +77,25 @@ return [
             ],
         ],
         [
+            "text" => "Weather service",
+            "url" => "weather",
+            "title" => "Weather service",
+            "submenu" => [
+                "items" => [
+                    [
+                        "text" => "Weather service",
+                        "url" => "weather",
+                        "title" => "IP-Geolocator.",
+                    ],
+                    [
+                        "text" => "Weather service API(JSON)",
+                        "url" => "weather-api",
+                        "title" => "Weather service API(JSON).",
+                    ],
+                ],
+            ],
+        ],
+        [
             "text" => "Styleväljare",
             "url" => "style",
             "title" => "Välj stylesheet.",

@@ -122,7 +122,7 @@ class KrisVerifyIpJsonController implements ContainerInjectableInterface
         $json = [
             "message" => __METHOD__. ", POST request was successful",
             "verified" => $verification,
-            "ip" => $ipAddress,
+            "ip" => $ipAddress ?? null,
             "host" => $host
         ];
         return [$json];
