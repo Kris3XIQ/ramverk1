@@ -1,11 +1,11 @@
 <?php
 
-namespace Anax\Controller;
+namespace Kris3XIQ\Controller;
 
 use Anax\Commons\ContainerInjectableInterface;
 use Anax\Commons\ContainerInjectableTrait;
-use Anax\Service\APIService;
-use Anax\Weather\Weather;
+use Kris3XIQ\Service\APIService;
+use Kris3XIQ\Weather\Weather;
 
 // use Anax\Route\Exception\ForbiddenException;
 // use Anax\Route\Exception\NotFoundException;

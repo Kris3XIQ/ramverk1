@@ -23,11 +23,6 @@ class APIService
         $this->keyChain = $key;
     }
 
-    public function getKeyChain()
-    {
-        return $this->keyChain;
-    }
-
     public function setServiceToLoad(string $service) : void
     {
         $this->service = $service;
@@ -37,8 +32,8 @@ class APIService
     {
         $service = $this->service;
         $keyChain = $this->keyChain;
-        if (array_key_exists($service, $keyChain)) {
-            return $keyChain[$service];
-        }
+        // if (array_key_exists($service, $keyChain)) {
+        return $keyChain[$service];
+        // }
     }
 }

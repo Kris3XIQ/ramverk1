@@ -1,12 +1,12 @@
 <?php
 
-namespace Anax\Controller;
+namespace Kris3XIQ\Controller;
 
 use Anax\Response\ResponseUtility;
 use Anax\DI\DIFactoryConfig;
 use PHPUnit\Framework\TestCase;
-use Anax\Service\APIService;
-use Anax\Weather\Weather;
+use Kris3XIQ\Service\APIService;
+use Kris3XIQ\Weather\Weather;
 
 /**
  * Test the SampleController.
@@ -24,18 +24,14 @@ class KrisWeatherControllerTest extends TestCase
         global $di;
 
         // Setup di
-        $this->di = new DIFactoryConfig();
-        $this->di = $di;
-        $di->loadServices(ANAX_INSTALL_PATH . "/config/di");
+        $di = new DIFactoryConfig();
+        $di->loadServices(ANAX_INSTALL_PATH . "/test/config/di");
 
         // Use a different cache dir for unit test
-        $di->get("cache")->setPath(ANAX_INSTALL_PATH . "/test/cache/anax");
+        $di->get("cache")->setPath(ANAX_INSTALL_PATH . "/test/cache");
 
-        // Controller setup
-        $_SESSION["weatherHistoryJSON"] = null;
-        $this->controller = new KrisWeatherController();
-        $this->service = $this->di->get("api-service");
-        $this->controller->setDI($this->di);
+        // Set DI
+        $this->di = $di;
     }
 
     /**
@@ -43,7 +39,11 @@ class KrisWeatherControllerTest extends TestCase
      */
     public function testIndexAction()
     {
-        $res = $this->controller->indexAction();
+        $controller = new KrisWeatherController();
+        $this->di->get("api-service");
+        $controller->setDI($this->di);
+
+        $res = $controller->indexAction();
         $body = $res->getBody();
         $this->assertStringContainsString("Weather service", $body);
     }
@@ -53,7 +53,11 @@ class KrisWeatherControllerTest extends TestCase
      */
     public function testRedirectPost()
     {
-        $res = $this->controller->indexActionPost();
+        $controller = new KrisWeatherController();
+        $this->di->get("api-service");
+        $controller->setDI($this->di);
+
+        $res = $controller->indexActionPost();
         $this->assertInstanceOf("Anax\Response\Response", $res);
         $this->assertInstanceOf("Anax\Response\ResponseUtility", $res);
     }
@@ -64,8 +68,12 @@ class KrisWeatherControllerTest extends TestCase
      */
     public function testWeatherCorrectLocationInput()
     {
+        $controller = new KrisWeatherController();
+        $this->di->get("api-service");
+        $controller->setDI($this->di);
+
         $this->di->get("request")->setPost("input", "Stockholm,SE");
-        $res = $this->controller->indexActionPost();
+        $res = $controller->indexActionPost();
         $this->assertInstanceOf("Anax\Response\ResponseUtility", $res);
     }
 
@@ -75,8 +83,12 @@ class KrisWeatherControllerTest extends TestCase
      */
     public function testWeatherCorrectIpInput()
     {
+        $controller = new KrisWeatherController();
+        $this->di->get("api-service");
+        $controller->setDI($this->di);
+
         $this->di->get("request")->setPost("input", "194.47.150.2");
-        $res = $this->controller->indexActionPost();
+        $res = $controller->indexActionPost();
         $this->assertInstanceOf("Anax\Response\ResponseUtility", $res);
     }
 
@@ -86,65 +98,39 @@ class KrisWeatherControllerTest extends TestCase
      */
     public function testWeatherIncorrectLocationInput()
     {
+        $controller = new KrisWeatherController();
+        $this->di->get("api-service");
+        $controller->setDI($this->di);
+
         $this->di->get("request")->setPost("input", "Someplace that doesnt exist");
-        $res = $this->controller->indexActionPost();
+        $res = $controller->indexActionPost();
         $this->assertInstanceOf("Anax\Response\ResponseUtility", $res);
     }
 
-    // /**
-    //  * Make sure we get the right result from verifying an
-    //  * ip6 ip-address.
-    //  */
-    // public function testIp6Post()
-    // {
-    //     $this->di->get("request");
-    //     $_POST["validateIp"] = "2001:0db8:85a3:0000:0000:8a2e:0370:7334";
-    //     $res = $this->controller->indexActionPost();
-    //     $this->assertInstanceOf("Anax\Response\ResponseUtility", $res);
-    // }
+    /**
+     * Test weatherHistoryJSON
+     */
+    public function testWeatherHistoryJSON()
+    {
+        $controller = new KrisWeatherController();
+        $this->di->get("api-service");
+        $controller->setDI($this->di);
 
-    // /**
-    //  * Make sure that validate dbwebb button-click gives the
-    //  * right result.
-    //  */
-    // public function testValidateDbwebbPost()
-    // {
-    //     $this->di->get("request");
-    //     $_POST["validateDbwebb"] = true;
-    //     $res = $this->controller->indexActionPost();
-    //     $this->assertInstanceOf("Anax\Response\ResponseUtility", $res);
-    // }
+        $_SESSION["weatherHistoryJSON"] = [
+            "cod" => 200,
+            "past_days" => [
+                "past_01" => "{}",
+                "past_02" => "{}",
+                "past_03" => "{}",
+                "past_04" => "{}",
+                "past_05" => "{}"
+            ],
+        ];
+        
+        $res = $controller->indexAction();
+        $body = $res->getBody();
+        $this->assertStringContainsString("Weather service", $body);
 
-    // /**
-    //  * Make sure that validate google button-click gives the
-    //  * right result.
-    //  */
-    // public function testValidateGooglePost()
-    // {
-    //     $this->di->get("request");
-    //     $_POST["validateGoogle"] = true;
-    //     $res = $this->controller->indexActionPost();
-    //     $this->assertInstanceOf("Anax\Response\ResponseUtility", $res);
-    // }
-
-    // /**
-    //  * Make sure we get the right result from not entering an ip.
-    //  */
-    // public function testValidateNone()
-    // {
-    //     $this->di->get("request");
-    //     $_POST["validateNone"] = true;
-    //     $res = $this->controller->indexActionPost();
-    //     $this->assertInstanceOf("Anax\Response\ResponseUtility", $res);
-    // }
-
-    // /**
-    //  * Test catch-all
-    //  */
-    // public function testCatchAll()
-    // {
-    //     $this->controller->initialize();
-    //     $res = $this->controller->catchAll();
-    //     $this->assertInstanceOf("Anax\Response\ResponseUtility", $res);
-    // }
+        $_SESSION["weatherHistoryJSON"] = null;
+    }
 }

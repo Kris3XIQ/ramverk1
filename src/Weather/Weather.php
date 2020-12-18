@@ -1,6 +1,7 @@
 <?php
 
-namespace Anax\Weather;
+// namespace Anax\Weather;
+namespace Kris3XIQ\Weather;
 
 /**
  * A model class retrieving data from an external server.
@@ -32,27 +33,6 @@ class Weather
     {
         $this->keyChain["keys"] = $keyChain;
     }
-
-    // /**
-    //  * Set a new API-keychain (multiple API-keys), if you
-    //  * need to fetch multiple API's.
-    //  *
-    //  * @return void
-    //  */
-    // public function getKeyChain()
-    // {
-    //     return $this->keyChain;
-    // }
-
-    // /**
-    //  * Get API-key value.
-    //  *
-    //  * @return string
-    //  */
-    // public function getApiKey()
-    // {
-    //     return $this->key;
-    // }
 
     public function verifyLocation(string $input)
     {

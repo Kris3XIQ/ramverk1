@@ -7,7 +7,7 @@ return [
         [
             "info" => "Kris weather service",
             "mount" => "weather",
-            "handler" => "\Kris3XIQ\Controller\KrisWeatherController",
+            "handler" => "\Anax\Controller\KrisWeatherController",
         ],
     ]
 ];

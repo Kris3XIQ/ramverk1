@@ -7,7 +7,7 @@ return [
         [
             "info" => "Kris weather API service",
             "mount" => "weather-api",
-            "handler" => "\Kris3XIQ\Controller\KrisWeatherApiController",
+            "handler" => "\Anax\Controller\KrisWeatherApiController",
         ],
     ]
 ];
